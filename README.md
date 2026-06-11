@@ -1,6 +1,6 @@
 <div align="center">
 
-#  Smart Home AI Platform
+# Smart Home AI Platform
 
 ### AI-Powered Smart Home Operating System with IoT Integration, Real-Time Monitoring, Predictive Analytics & Intelligent Automation
 
@@ -16,7 +16,7 @@
 
 **A production-grade Smart Home OS** combining real machine learning, IoT simulation, real-time telemetry, a digital twin, predictive maintenance, and a security operations center — all in one clean, full-stack monorepo.
 
-### 🌐 Live Demo
+### Live Demo
 
 | | |
 |---|---|
@@ -29,7 +29,7 @@
 
 ---
 
-##  Table of Contents
+## Table of Contents
 
 - [Project Overview](#-project-overview)
 - [Key Features](#-key-features)
@@ -48,7 +48,7 @@
 
 ---
 
-##  Project Overview
+## Project Overview
 
 The **Smart Home AI Platform** is a complete **Smart Home Operating System** that lets a homeowner monitor devices, forecast energy consumption, detect anomalies, schedule loads intelligently, and cut costs — driven by a **real scikit-learn machine-learning engine**, not mocks.
 
@@ -62,7 +62,7 @@ The platform ships with **15 dashboard pages**, an **IoT simulation engine**, **
 
 ---
 
-##  Key Features
+## Key Features
 
  **Real Machine Learning** — 6 trained scikit-learn models (energy, anomaly, usage, scheduling, cost, recommendations).
  **IoT Simulation Engine** — stateful fleet of ~20 devices across 7 rooms with live telemetry.
@@ -79,7 +79,7 @@ The platform ships with **15 dashboard pages**, an **IoT simulation engine**, **
 
 ---
 
-##  Smart Home Architecture
+## Smart Home Architecture
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
@@ -108,7 +108,7 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the full design.
 
 ---
 
-##  Technology Stack
+## Technology Stack
 
 | Layer | Technologies |
 |-------|--------------|
@@ -120,7 +120,7 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the full design.
 
 ---
 
-##  AI Engine
+## AI Engine
 
 Six **real, trained** machine-learning models served by FastAPI:
 
@@ -141,7 +141,7 @@ cd ai-engine && python -m training.train
 
 ---
 
-##  IoT Integration
+## IoT Integration
 
 The **IoT Simulation Engine** (`backend/src/lib/iotSimulator.ts`) maintains a stateful fleet of virtual smart-home devices:
 
@@ -154,7 +154,7 @@ State evolves continuously and is exposed both over Socket.IO and via `GET /api/
 
 ---
 
-##  Real-Time Monitoring
+## Real-Time Monitoring
 
 A Socket.IO gateway broadcasts three live channels every **3 seconds**:
 
@@ -168,7 +168,7 @@ The frontend consumes these to power the live dashboard, executive scores, SOC t
 
 ---
 
-##  Project Statistics
+## Project Statistics
 
 | | |
 |---|---|
@@ -185,7 +185,7 @@ Additional metrics: **154 source files** · **55 TypeScript** · **30 React** ·
 
 ---
 
-##  Installation
+## Installation
 
 ### Quick start (Docker)
 
@@ -242,7 +242,7 @@ npm run dev
 
 ---
 
-##  Deployment Guide
+## Deployment Guide
 
 The platform is cloud-ready for **Railway** (backend, AI engine) and **Vercel** (frontend).
 
@@ -257,7 +257,7 @@ Full guide: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
 ---
 
-## 📁 Folder Structure
+## Folder Structure
 
 ```
 smart-home-ai-platform/
@@ -280,7 +280,7 @@ smart-home-ai-platform/
 
 ---
 
-##  Screenshots
+## Screenshots
 
 ### Landing Page
 ![Landing Page](docs/screenshots/landing.png)
@@ -302,7 +302,7 @@ smart-home-ai-platform/
 
 ---
 
-##  Future Improvements
+## Future Improvements
 
 -  Connect a real **MQTT bridge** to replace the simulation with physical devices.
 -  Render the digital twin in **3D** using three.js / React Three Fiber (spatial layer already prepared).
@@ -312,7 +312,7 @@ smart-home-ai-platform/
 
 ---
 
-##  Author
+## Author
 
 **Abdulaziz AlAmawi** — sole project owner, developer and copyright holder.
 
