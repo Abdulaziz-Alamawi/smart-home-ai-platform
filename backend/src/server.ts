@@ -1,3 +1,12 @@
+process.on("uncaughtException", (err) => {
+  console.error("[fatal] uncaughtException:", err);
+  process.exit(1);
+});
+process.on("unhandledRejection", (reason) => {
+  console.error("[fatal] unhandledRejection:", reason);
+  process.exit(1);
+});
+
 import { createApp } from "./app";
 import { env } from "./config/env";
 import { logger } from "./lib/logger";
@@ -5,9 +14,10 @@ import { prisma } from "./lib/prisma";
 import { initRealtime } from "./lib/realtime";
 
 async function bootstrap(): Promise<void> {
+  console.log(`[boot] starting backend on 0.0.0.0:${env.port} (${env.nodeEnv})`);
   const app = createApp();
 
-  const server = app.listen(env.port, () => {
+  const server = app.listen(env.port, "0.0.0.0", () => {
     logger.info(`Smart Home AI API listening on port ${env.port}`, {
       env: env.nodeEnv,
       docs: `http://localhost:${env.port}/api/docs`,

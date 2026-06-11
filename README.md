@@ -16,6 +16,15 @@
 
 **A production-grade Smart Home OS** combining real machine learning, IoT simulation, real-time telemetry, a digital twin, predictive maintenance, and a security operations center — all in one clean, full-stack monorepo.
 
+### 🌐 Live Demo
+
+| | |
+|---|---|
+| **Website** | [**frontend-production-41839.up.railway.app**](https://frontend-production-41839.up.railway.app) |
+| **API** | [backend-production-bd68.up.railway.app](https://backend-production-bd68.up.railway.app) |
+| **Demo login** | `demo@smarthome.ai` / `Demo123!` |
+| **Admin login** | `admin@smarthome.ai` / `Admin123!` |
+
 </div>
 
 ---

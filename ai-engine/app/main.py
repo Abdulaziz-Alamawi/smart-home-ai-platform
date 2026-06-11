@@ -13,8 +13,11 @@ from app.services.registry import registry
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Load persisted models, or train them on first boot.
-    registry.load_or_train()
+    # Load models in a background thread so the server becomes healthy immediately.
+    import asyncio
+
+    loop = asyncio.get_event_loop()
+    loop.run_in_executor(None, registry.load_or_train)
     yield
 
 

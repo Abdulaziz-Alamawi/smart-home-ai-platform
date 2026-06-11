@@ -43,11 +43,15 @@ export interface AnomalyResponse {
 
 export const aiClient = {
   health: async (): Promise<boolean> => {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 3000);
     try {
-      const res = await fetch(`${env.aiEngineUrl}/health`);
+      const res = await fetch(`${env.aiEngineUrl}/health`, { signal: controller.signal });
       return res.ok;
     } catch {
       return false;
+    } finally {
+      clearTimeout(timeout);
     }
   },
   predictEnergy: (body: Record<string, unknown>) =>
