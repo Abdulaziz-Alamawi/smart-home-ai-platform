@@ -1,29 +1,21 @@
 # Portfolio Screenshots
 
-Capture these from **http://localhost:3001** after login (`demo@smarthome.ai` / `Demo123!`).
+> The portfolio screenshots used in the main [README](../README.md) live in
+> [`docs/screenshots/`](../docs/screenshots/).
 
-Recommended filenames for README embedding:
+| File | Page | Status |
+|------|------|--------|
+| `docs/screenshots/landing.png` | Landing page | ✅ Captured |
+| `docs/screenshots/dashboard.png` | Home Overview (live) | ✅ Captured |
+| `docs/screenshots/device-management.png` | Devices | 🔲 Placeholder |
+| `docs/screenshots/analytics-center.png` | Analytics | 🔲 Placeholder |
+| `docs/screenshots/automation-engine.png` | Automation | 🔲 Placeholder |
+| `docs/screenshots/monitoring-panel.png` | Real-time monitoring | 🔲 Placeholder |
 
-| File | Page | What to show |
-|------|------|--------------|
-| `01-executive.png` | `/executive` | Overall score ring + 6 KPI cards |
-| `02-digital-twin.png` | `/twin` | Interactive room grid + drawer |
-| `03-soc.png` | `/soc` | Camera grid + security timeline |
-| `04-ai-center.png` | `/ai` | Explainable recommendations + forecast |
-| `05-maintenance.png` | `/maintenance` | Failure probability + service dates |
-| `06-energy.png` | `/energy` | Heatmap + device breakdown |
-| `07-automation.png` | `/automation` | IF/THEN rule builder |
-| `08-home-map.png` | `/map` | Floor-plan temperature zones |
+## How to replace placeholders
 
-## Capture tips
+Capture from **http://localhost:3001** after logging in (`demo@smarthome.ai` / `Demo123!`):
 
-1. Use dark mode for best visual impact.
-2. Window width ≥ 1440px for full sidebar + content.
-3. Wait 5s on dashboard pages for live telemetry to populate.
-4. Arabic (`ع` toggle) optional — capture one EN + one AR for i18n showcase.
-
-## Usage in README
-
-```markdown
-![Executive Command Center](./screenshots/01-executive.png)
-```
+1. Use dark mode and a window width ≥ 1440px.
+2. Wait ~5s on dashboard pages for live telemetry to populate.
+3. Save over the matching file in `docs/screenshots/` keeping the same name.
