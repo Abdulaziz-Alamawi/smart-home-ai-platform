@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🏠 Smart Home AI Platform
+#  Smart Home AI Platform
 
 ### AI-Powered Smart Home Operating System with IoT Integration, Real-Time Monitoring, Predictive Analytics & Intelligent Automation
 
@@ -20,7 +20,7 @@
 
 ---
 
-## 📋 Table of Contents
+##  Table of Contents
 
 - [Project Overview](#-project-overview)
 - [Key Features](#-key-features)
@@ -39,7 +39,7 @@
 
 ---
 
-## 🎯 Project Overview
+##  Project Overview
 
 The **Smart Home AI Platform** is a complete **Smart Home Operating System** that lets a homeowner monitor devices, forecast energy consumption, detect anomalies, schedule loads intelligently, and cut costs — driven by a **real scikit-learn machine-learning engine**, not mocks.
 
@@ -53,24 +53,24 @@ The platform ships with **15 dashboard pages**, an **IoT simulation engine**, **
 
 ---
 
-## ✨ Key Features
+##  Key Features
 
-- 🧠 **Real Machine Learning** — 6 trained scikit-learn models (energy, anomaly, usage, scheduling, cost, recommendations).
-- 📡 **IoT Simulation Engine** — stateful fleet of ~20 devices across 7 rooms with live telemetry.
-- ⚡ **Real-Time Monitoring** — Socket.IO channels stream telemetry, IoT snapshots, and events every 3 seconds.
-- 🏢 **Executive Command Center** — home health, AI confidence, reliability, efficiency, security & savings scores.
-- 🔧 **Predictive Maintenance** — remaining lifespan, failure probability, risk tiers, and suggested service dates.
-- 🛡️ **Security Operations Center (SOC)** — camera grid, door sensors, motion timeline.
-- 🗺️ **Digital Twin & Home Map** — interactive room grid with live thermal and occupancy telemetry.
-- 🤖 **Explainable AI** — every recommendation surfaces reason, confidence, impact, and estimated savings.
-- ⚙️ **Visual Automation Engine** — IF/THEN rule builder backed by full CRUD APIs.
-- 🔐 **Enterprise Security** — JWT with refresh-token rotation, RBAC, Zod validation, Helmet, rate limiting, audit logs.
-- 🌍 **Internationalization** — Arabic/English with full RTL layout toggle.
-- 🐳 **Production-Ready** — Dockerfiles, Docker Compose, Railway & Vercel configs.
+ **Real Machine Learning** — 6 trained scikit-learn models (energy, anomaly, usage, scheduling, cost, recommendations).
+ **IoT Simulation Engine** — stateful fleet of ~20 devices across 7 rooms with live telemetry.
+ **Real-Time Monitoring** — Socket.IO channels stream telemetry, IoT snapshots, and events every 3 seconds.
+ **Executive Command Center** — home health, AI confidence, reliability, efficiency, security & savings scores.
+ **Predictive Maintenance** — remaining lifespan, failure probability, risk tiers, and suggested service dates.
+ **Security Operations Center (SOC)** — camera grid, door sensors, motion timeline.
+ **Digital Twin & Home Map** — interactive room grid with live thermal and occupancy telemetry.
+ **Explainable AI** — every recommendation surfaces reason, confidence, impact, and estimated savings.
+ **Visual Automation Engine** — IF/THEN rule builder backed by full CRUD APIs.
+ **Enterprise Security** — JWT with refresh-token rotation, RBAC, Zod validation, Helmet, rate limiting, audit logs.
+ **Internationalization** — Arabic/English with full RTL layout toggle.
+ **Production-Ready** — Dockerfiles, Docker Compose, Railway & Vercel configs.
 
 ---
 
-## 🏗️ Smart Home Architecture
+##  Smart Home Architecture
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
@@ -99,7 +99,7 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the full design.
 
 ---
 
-## 🧰 Technology Stack
+##  Technology Stack
 
 | Layer | Technologies |
 |-------|--------------|
@@ -111,7 +111,7 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the full design.
 
 ---
 
-## 🧠 AI Engine
+##  AI Engine
 
 Six **real, trained** machine-learning models served by FastAPI:
 
@@ -132,7 +132,7 @@ cd ai-engine && python -m training.train
 
 ---
 
-## 📡 IoT Integration
+##  IoT Integration
 
 The **IoT Simulation Engine** (`backend/src/lib/iotSimulator.ts`) maintains a stateful fleet of virtual smart-home devices:
 
@@ -145,7 +145,7 @@ State evolves continuously and is exposed both over Socket.IO and via `GET /api/
 
 ---
 
-## ⚡ Real-Time Monitoring
+##  Real-Time Monitoring
 
 A Socket.IO gateway broadcasts three live channels every **3 seconds**:
 
@@ -159,24 +159,24 @@ The frontend consumes these to power the live dashboard, executive scores, SOC t
 
 ---
 
-## 📊 Project Statistics
+##  Project Statistics
 
 | | |
 |---|---|
-| 🏗️ **Full-Stack Architecture** | 4 independently deployable tiers |
-| 🤖 **AI-Powered Smart Home Platform** | 6 trained ML models |
-| ⚡ **Real-Time Monitoring** | Socket.IO, 3 live channels |
-| 📡 **IoT Device Integration** | ~20 simulated devices, 7 rooms |
-| 🔧 **Predictive Maintenance** | Lifespan & failure-probability scoring |
-| 🧠 **Machine Learning Models** | scikit-learn (GBR, Isolation Forest, KMeans) |
-| 🐳 **Docker Support** | Dockerfiles + Compose for the full stack |
-| 🚀 **Production-Ready Deployment** | Railway + Vercel configs, CI workflow |
+|  **Full-Stack Architecture** | 4 independently deployable tiers |
+|  **AI-Powered Smart Home Platform** | 6 trained ML models |
+|  **Real-Time Monitoring** | Socket.IO, 3 live channels |
+|  **IoT Device Integration** | ~20 simulated devices, 7 rooms |
+|  **Predictive Maintenance** | Lifespan & failure-probability scoring |
+|  **Machine Learning Models** | scikit-learn (GBR, Isolation Forest, KMeans) |
+|  **Docker Support** | Dockerfiles + Compose for the full stack |
+|  **Production-Ready Deployment** | Railway + Vercel configs, CI workflow |
 
 Additional metrics: **154 source files** · **55 TypeScript** · **30 React** · **17 Python** · **13 DB models** · **14 REST modules** · **15 dashboard pages** · **Jest 14/14** · **E2E 28/28**.
 
 ---
 
-## 🚀 Installation
+##  Installation
 
 ### Quick start (Docker)
 
@@ -233,7 +233,7 @@ npm run dev
 
 ---
 
-## 🌐 Deployment Guide
+##  Deployment Guide
 
 The platform is cloud-ready for **Railway** (backend, AI engine) and **Vercel** (frontend).
 
@@ -271,7 +271,7 @@ smart-home-ai-platform/
 
 ---
 
-## 🖼️ Screenshots
+##  Screenshots
 
 ### Landing Page
 ![Landing Page](docs/screenshots/landing.png)
@@ -293,17 +293,17 @@ smart-home-ai-platform/
 
 ---
 
-## 🔮 Future Improvements
+##  Future Improvements
 
-- 🌐 Connect a real **MQTT bridge** to replace the simulation with physical devices.
-- 🧊 Render the digital twin in **3D** using three.js / React Three Fiber (spatial layer already prepared).
-- 📈 Train a dedicated **survival model** for predictive maintenance.
-- 🔔 Add push/email notification delivery and a mobile companion app.
-- ☁️ Live cloud deployment with managed Postgres, TLS, backups, and uptime monitoring.
+-  Connect a real **MQTT bridge** to replace the simulation with physical devices.
+-  Render the digital twin in **3D** using three.js / React Three Fiber (spatial layer already prepared).
+-  Train a dedicated **survival model** for predictive maintenance.
+-  Add push/email notification delivery and a mobile companion app.
+-  Live cloud deployment with managed Postgres, TLS, backups, and uptime monitoring.
 
 ---
 
-## 👤 Author
+##  Author
 
 **Abdulaziz AlAmawi** — sole project owner, developer and copyright holder.
 
