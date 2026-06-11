@@ -1,0 +1,303 @@
+// Smart Home AI Platform - Database schema
+// Provider: PostgreSQL  |  ORM: Prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ----------------------------------------------------------------------
+// Enums
+// ----------------------------------------------------------------------
+enum Role {
+  ADMIN
+  MANAGER
+  USER
+}
+
+enum DeviceType {
+  LIGHT
+  THERMOSTAT
+  PLUG
+  SENSOR
+  CAMERA
+  LOCK
+  APPLIANCE
+  EV_CHARGER
+  HVAC
+  OTHER
+}
+
+enum DeviceStatus {
+  ONLINE
+  OFFLINE
+  ERROR
+}
+
+enum NotificationType {
+  INFO
+  WARNING
+  ALERT
+  RECOMMENDATION
+}
+
+enum RecommendationCategory {
+  COST
+  EFFICIENCY
+  SAFETY
+  COMFORT
+  INFO
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum AutomationTrigger {
+  SCHEDULE
+  SENSOR
+  DEVICE_STATE
+  ENERGY_THRESHOLD
+  AI_RECOMMENDATION
+}
+
+// ----------------------------------------------------------------------
+// Core identity
+// ----------------------------------------------------------------------
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  fullName     String
+  role         Role     @default(USER)
+  isActive     Boolean  @default(true)
+  avatarUrl    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  rooms           Room[]
+  devices         Device[]
+  deviceGroups    DeviceGroup[]
+  automationRules AutomationRule[]
+  schedules       Schedule[]
+  notifications   Notification[]
+  recommendations Recommendation[]
+  energyUsage     EnergyUsage[]
+  analytics       Analytics[]
+  auditLogs       AuditLog[]
+  refreshTokens   RefreshToken[]
+  settings        UserSettings?
+
+  @@index([email])
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  revoked   Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model UserSettings {
+  id                 String   @id @default(uuid())
+  userId             String   @unique
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  theme              String   @default("system")
+  language           String   @default("en")
+  currency           String   @default("USD")
+  energyTariff       Float    @default(0.18)
+  timezone           String   @default("UTC")
+  emailNotifications Boolean  @default(true)
+  pushNotifications  Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+// ----------------------------------------------------------------------
+// Spatial / grouping
+// ----------------------------------------------------------------------
+model Room {
+  id        String   @id @default(uuid())
+  name      String
+  floor     Int      @default(0)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  devices   Device[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model DeviceGroup {
+  id        String   @id @default(uuid())
+  name      String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  devices   Device[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+// ----------------------------------------------------------------------
+// Devices + telemetry
+// ----------------------------------------------------------------------
+model Device {
+  id            String       @id @default(uuid())
+  name          String
+  type          DeviceType   @default(OTHER)
+  status        DeviceStatus @default(OFFLINE)
+  powerRatingKw Float        @default(0.1)
+  isOn          Boolean      @default(false)
+  firmware      String?
+  ipAddress     String?
+  lastSeenAt    DateTime?
+  metadata      Json?
+
+  userId  String
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  roomId  String?
+  room    Room?   @relation(fields: [roomId], references: [id], onDelete: SetNull)
+  groupId String?
+  group   DeviceGroup? @relation(fields: [groupId], references: [id], onDelete: SetNull)
+
+  energyUsage EnergyUsage[]
+  schedules   Schedule[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+  @@index([roomId])
+  @@index([status])
+}
+
+model EnergyUsage {
+  id          String   @id @default(uuid())
+  deviceId    String
+  device      Device   @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  energyKwh   Float
+  cost        Float    @default(0)
+  recordedAt  DateTime @default(now())
+
+  @@index([deviceId, recordedAt])
+  @@index([userId, recordedAt])
+}
+
+// ----------------------------------------------------------------------
+// Automation
+// ----------------------------------------------------------------------
+model AutomationRule {
+  id          String            @id @default(uuid())
+  name        String
+  description String?
+  trigger     AutomationTrigger
+  conditions  Json
+  actions     Json
+  isEnabled   Boolean           @default(true)
+  lastRunAt   DateTime?
+  userId      String
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@index([userId])
+}
+
+model Schedule {
+  id         String   @id @default(uuid())
+  name       String
+  cron       String
+  action     Json
+  isEnabled  Boolean  @default(true)
+  nextRunAt  DateTime?
+  deviceId   String?
+  device     Device?  @relation(fields: [deviceId], references: [id], onDelete: SetNull)
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([userId])
+}
+
+// ----------------------------------------------------------------------
+// Engagement + insights
+// ----------------------------------------------------------------------
+model Notification {
+  id        String           @id @default(uuid())
+  type      NotificationType @default(INFO)
+  title     String
+  message   String
+  isRead    Boolean          @default(false)
+  metadata  Json?
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime         @default(now())
+
+  @@index([userId, isRead])
+}
+
+model Recommendation {
+  id               String                 @id @default(uuid())
+  category         RecommendationCategory @default(INFO)
+  priority         Priority               @default(LOW)
+  title            String
+  message          String
+  estimatedSavings Float?
+  isApplied        Boolean                @default(false)
+  isDismissed      Boolean                @default(false)
+  metadata         Json?
+  userId           String
+  user             User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt        DateTime               @default(now())
+
+  @@index([userId])
+}
+
+model Analytics {
+  id              String   @id @default(uuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  periodStart     DateTime
+  periodEnd       DateTime
+  totalEnergyKwh  Float    @default(0)
+  totalCost       Float    @default(0)
+  peakHour        Int      @default(0)
+  loadFactor      Float    @default(0)
+  metadata        Json?
+  createdAt       DateTime @default(now())
+
+  @@index([userId, periodStart])
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action     String
+  resource   String
+  resourceId String?
+  ipAddress  String?
+  userAgent  String?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+  @@index([resource])
+  @@index([createdAt])
+}

@@ -1,0 +1,87 @@
+version: "3.9"
+
+# Ports are chosen to avoid clashes with other local projects (e.g. StudentCareer
+# on 3000/8000). Host-published ports: Frontend 3001, Backend 4010, AI Engine 8010,
+# Postgres 5433. Containers talk to each other over the internal network.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: shai_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-shai}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-shai_secret_change_me}
+      POSTGRES_DB: ${POSTGRES_DB:-smart_home_ai}
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-shai} -d ${POSTGRES_DB:-smart_home_ai}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ai-engine:
+    build:
+      context: ./ai-engine
+      dockerfile: Dockerfile
+    container_name: shai_ai_engine
+    restart: unless-stopped
+    environment:
+      MODEL_DIR: /app/models
+      AI_ENGINE_PORT: 8010
+    ports:
+      - "${AI_ENGINE_PORT:-8010}:8010"
+    volumes:
+      - ai_models:/app/models
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; urllib.request.urlopen('http://localhost:8010/health'); sys.exit(0)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: shai_backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ai-engine:
+        condition: service_started
+    environment:
+      NODE_ENV: production
+      PORT: 4010
+      DATABASE_URL: ${DATABASE_URL:-postgresql://shai:shai_secret_change_me@postgres:5432/smart_home_ai?schema=public}
+      JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET:-replace_with_long_random_string_access}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-replace_with_long_random_string_refresh}
+      JWT_ACCESS_EXPIRES_IN: ${JWT_ACCESS_EXPIRES_IN:-15m}
+      JWT_REFRESH_EXPIRES_IN: ${JWT_REFRESH_EXPIRES_IN:-7d}
+      AI_ENGINE_URL: http://ai-engine:8010
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3001}
+    ports:
+      - "${BACKEND_PORT:-4010}:4010"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:4010/api/v1}
+    container_name: shai_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      PORT: 3001
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:4010/api/v1}
+    ports:
+      - "${FRONTEND_PORT:-3001}:3001"
+
+volumes:
+  postgres_data:
+  ai_models:

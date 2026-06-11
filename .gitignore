@@ -1,0 +1,59 @@
+# Dependencies
+node_modules/
+**/node_modules/
+.pnp
+.pnp.js
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+*.joblib
+!ai-engine/models/.gitkeep
+
+# Builds
+dist/
+build/
+.next/
+out/
+*.tsbuildinfo
+
+# Environment
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Prisma
+backend/prisma/dev.db
+
+# Embedded Postgres (local e2e validation only)
+.pgdata/
+backend/.pgdata/
